@@ -1,6 +1,6 @@
 {
-  "name": "Gyro Roller Dashboard",
-  "short_name": "GyroRoller",
+  "name": "Wobbly Dashboard",
+  "short_name": "Wobbly",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",
