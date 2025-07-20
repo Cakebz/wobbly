@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gyro Roller Dashboard</title>
+  <title>Wobbly Dashboard</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#00bcd4" />
@@ -35,22 +35,22 @@
 </head>
 <body>
   <div class="container">
-    <h1>Gyro Roller Dashboard</h1>
+    <h1>Wobbly Dashboard</h1>
 
     <section class="section">
       <h2>IMU Data</h2>
       <div class="data-group">
-        <p>Pitch: <span id="pitch">0</span>&deg;</p>
-        <p>Roll: <span id="roll">0</span>&deg;</p>
-        <p>Yaw: <span id="yaw">0</span>&deg;</p>
+        <p><strong>Pitch:</strong> <span id="pitch">0</span>°</p>
+        <p><strong>Roll:</strong> <span id="roll">0</span>°</p>
+        <p><strong>Yaw:</strong> <span id="yaw">0</span>°</p>
       </div>
     </section>
 
     <section class="section">
       <h2>Flywheel RPM</h2>
       <div class="data-group">
-        <p>Flywheel 1: <span id="rpm1">0</span> RPM</p>
-        <p>Flywheel 2: <span id="rpm2">0</span> RPM</p>
+        <p><strong>Flywheel 1:</strong> <span id="rpm1">0</span> RPM</p>
+        <p><strong>Flywheel 2:</strong> <span id="rpm2">0</span> RPM</p>
       </div>
     </section>
 
@@ -72,8 +72,8 @@
 
     <section class="section">
       <h2>Status</h2>
-      <p>Battery: <span id="battery">100%</span></p>
-      <p>Wi-Fi: <span id="wifi">Connected</span></p>
+      <p><strong>Battery:</strong> <span id="battery">100%</span></p>
+      <p><strong>Wi-Fi:</strong> <span id="wifi">Connected</span></p>
       <label>
         <input type="checkbox" id="autoBalance" checked onchange="toggleAutoBalance(this)" />
         Auto Balance
