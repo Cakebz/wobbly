@@ -1,4 +1,3 @@
-// Simulated values – replace with live data fetching (e.g., via WebSocket, Firebase, etc.)
 let gyroData = { pitch: 0, roll: 0, yaw: 0 };
 let batteryLevel = 87;
 let status = "Balancing";
@@ -12,20 +11,17 @@ function updateUI() {
 }
 
 function toggleMode() {
-  if (status === "Balancing") {
-    status = "Manual Control";
-  } else {
-    status = "Balancing";
-  }
+  status = (status === "Balancing") ? "Manual Control" : "Balancing";
   updateUI();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   updateUI();
-  document.getElementById("toggleMode").addEventListener("click", toggleMode);
+  const toggleBtn = document.getElementById("toggleMode");
+  if (toggleBtn) toggleBtn.addEventListener("click", toggleMode);
 });
 
-// Optional: simulate live data updates
+// Simulate gyro updates
 setInterval(() => {
   gyroData.pitch += (Math.random() - 0.5) * 2;
   gyroData.roll += (Math.random() - 0.5) * 2;
