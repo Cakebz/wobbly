@@ -3,10 +3,11 @@ const urlsToCache = [
   "index.html",
   "style.css",
   "app.js",
-  "manifest.json",
+  "manifest.json?v=2",
   "icons/icon-192.png",
   "icons/icon-512.png"
 ];
+
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
