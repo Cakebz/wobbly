@@ -33,10 +33,13 @@ function toggleAutoBalance(el) {
 }
 
 function setupWebSocket() {
-  socket = new WebSocket("ws://192.168.x.x/ws");  // <-- REPLACE with your ESP32 IP
+  socket = new WebSocket("ws://192.168.8.103/ws");  // <-- REPLACE with your ESP32 IP
 
   socket.onopen = () => addLog("WebSocket connected");
-  socket.onclose = () => addLog("WebSocket disconnected. Reconnecting in 3 seconds...");
+  socket.onclose = () => {
+    addLog("WebSocket disconnected. Reconnecting in 3 seconds...");
+    setTimeout(setupWebSocket, 3000);
+  };
   socket.onerror = () => {
     addLog("WebSocket error");
     socket.close();
@@ -49,14 +52,6 @@ function setupWebSocket() {
       addLog("Invalid telemetry data");
     }
   };
-
-  // Attempt reconnect after 3 seconds if closed
-  setTimeout(() => {
-    if (socket.readyState !== WebSocket.OPEN) {
-      addLog("Attempting to reconnect WebSocket...");
-      setupWebSocket();
-    }
-  }, 3000);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
