@@ -40,7 +40,7 @@ function toggleAutoBalance(checkbox) {
 }
 
 function setupWebSocket() {
-  socket = new WebSocket("ws://192.168.8.103:81");
+  socket = new WebSocket("ws://192.168.8.103/ws"); // Port 80 default + path /ws
 
   socket.addEventListener("open", () => {
     addLog("WebSocket connected");
