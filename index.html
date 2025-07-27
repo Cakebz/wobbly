@@ -36,6 +36,7 @@
 <body>
   <div class="container">
     <h1>Wobbly Dashboard</h1>
+
     <section class="section">
       <h2>IMU Data</h2>
       <div class="data-group">
@@ -44,6 +45,7 @@
         <p><strong>Yaw:</strong> <span id="yaw">0</span>°</p>
       </div>
     </section>
+
     <section class="section">
       <h2>Flywheel RPM</h2>
       <div class="data-group">
@@ -51,31 +53,37 @@
         <p><strong>Flywheel 2:</strong> <span id="rpm2">0</span> RPM</p>
       </div>
     </section>
+
     <section class="section">
       <h2>Remote Control</h2>
       <div class="button-group">
-        <button onclick="sendCommand('forward')">Forward</button>
-        <button onclick="sendCommand('backward')">Backward</button>
-        <button onclick="sendCommand('left')">Left</button>
-        <button onclick="sendCommand('right')">Right</button>
-        <button onclick="sendCommand('stop')">Stop</button>
+        <button data-command="forward">Forward</button>
+        <button data-command="backward">Backward</button>
+        <button data-command="left">Left</button>
+        <button data-command="right">Right</button>
+        <button data-command="stop">Stop</button>
       </div>
     </section>
+
     <section class="section">
       <h2>Debug Logs</h2>
       <textarea id="log" readonly></textarea>
     </section>
+
     <section class="section">
       <h2>Status</h2>
       <p><strong>Battery:</strong> <span id="battery">100%</span></p>
       <p><strong>Wi-Fi:</strong> <span id="wifi">Connected</span></p>
+      <p><strong>System Status:</strong> <span id="status">Idle</span></p>
       <label>
-        <input type="checkbox" id="autoBalance" checked onchange="toggleAutoBalance(this)" />
+        <input type="checkbox" id="autoBalance" checked />
         Auto Balance
       </label>
     </section>
+
     <button id="installBtn" style="display: none;">Install App</button>
   </div>
+
   <script src="app.js"></script>
 </body>
 </html>
