@@ -2,88 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wobbly Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#947ac5" />
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("sw.js")
-        .then(() => console.log("Service Worker registered"))
-        .catch(err => console.error("SW registration failed:", err));
-    }
-
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      const btn = document.getElementById("installBtn");
-      if (btn) btn.style.display = "block";
-      btn.addEventListener("click", () => {
-        btn.style.display = "none";
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then(choice => {
-          if (choice.outcome === "accepted") {
-            console.log("PWA installed");
-          }
-          deferredPrompt = null;
-        });
-      });
-    });
-  </script>
+  <title>Minimal Wobbly WS Test</title>
 </head>
 <body>
-  <div class="container">
-    <h1>Wobbly Dashboard</h1>
+  <h1>Wobbly WebSocket Test</h1>
 
-    <section class="section">
-      <h2>IMU Data</h2>
-      <div class="data-group">
-        <p><strong>Pitch:</strong> <span id="pitch">0</span>°</p>
-        <p><strong>Roll:</strong> <span id="roll">0</span>°</p>
-        <p><strong>Yaw:</strong> <span id="yaw">0</span>°</p>
-      </div>
-    </section>
+  <button onclick="sendCmd('forward')">Forward</button>
+  <button onclick="sendCmd('backward')">Backward</button>
+  <button onclick="sendCmd('left')">Left</button>
+  <button onclick="sendCmd('right')">Right</button>
+  <button onclick="sendCmd('stop')">Stop</button>
 
-    <section class="section">
-      <h2>Flywheel RPM</h2>
-      <div class="data-group">
-        <p><strong>Flywheel 1:</strong> <span id="rpm1">0</span> RPM</p>
-        <p><strong>Flywheel 2:</strong> <span id="rpm2">0</span> RPM</p>
-      </div>
-    </section>
+  <script>
+    let socket;
 
-    <section class="section">
-      <h2>Remote Control</h2>
-      <div class="button-group">
-        <button data-command="forward">Forward</button>
-        <button data-command="backward">Backward</button>
-        <button data-command="left">Left</button>
-        <button data-command="right">Right</button>
-        <button data-command="stop">Stop</button>
-      </div>
-    </section>
+    function sendCmd(cmd) {
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        console.log('Sending command:', cmd);
+        socket.send(JSON.stringify({ cmd: cmd }));
+      } else {
+        console.log('WebSocket not connected. Cannot send:', cmd);
+      }
+    }
 
-    <section class="section">
-      <h2>Debug Logs</h2>
-      <textarea id="log" readonly></textarea>
-    </section>
+    function setupWebSocket() {
+      socket = new WebSocket("ws://192.168.8.103/ws"); // Replace with your ESP32 IP and path
 
-    <section class="section">
-      <h2>Status</h2>
-      <p><strong>Battery:</strong> <span id="battery">100%</span></p>
-      <p><strong>Wi-Fi:</strong> <span id="wifi">Connected</span></p>
-      <p><strong>System Status:</strong> <span id="status">Idle</span></p>
-      <label>
-        <input type="checkbox" id="autoBalance" checked />
-        Auto Balance
-      </label>
-    </section>
+      socket.onopen = () => {
+        console.log('WebSocket connected');
+      };
 
-    <button id="installBtn" style="display: none;">Install App</button>
-  </div>
+      socket.onclose = () => {
+        console.log('WebSocket disconnected');
+        // Try reconnecting after 3 seconds
+        setTimeout(setupWebSocket, 3000);
+      };
 
-  <script src="app.js"></script>
+      socket.onerror = (error) => {
+        console.error('WebSocket error:', error);
+        socket.close();
+      };
+
+      socket.onmessage = (event) => {
+        console.log('Received message:', event.data);
+      };
+    }
+
+    window.onload = setupWebSocket;
+  </script>
 </body>
 </html>
