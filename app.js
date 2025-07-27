@@ -40,8 +40,7 @@ function toggleAutoBalance(checkbox) {
 }
 
 function setupWebSocket() {
-  const ESP32_IP = "192.168.8.103"; // <-- Update if needed
-  socket = new WebSocket(`ws://${ESP32_IP}/ws`);
+  socket = new WebSocket("ws://192.168.8.103:81");
 
   socket.addEventListener("open", () => {
     addLog("WebSocket connected");
